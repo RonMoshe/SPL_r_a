@@ -1,7 +1,5 @@
 package java.bgu.spl.mics;
 
-import jdk.vm.ci.code.site.Call;
-
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
@@ -19,7 +17,7 @@ public class MessageBusImpl implements MessageBus {
 	private MessageBusImpl()
 	{
 		instance = getInstance();
-		registeredMicroservice = new ArrayList<>();
+		registeredMicroservice = new ArrayList<MicroService>();
 		microserviceQueue = new ArrayList<PriorityQueue<Message>>();
 	}
 
