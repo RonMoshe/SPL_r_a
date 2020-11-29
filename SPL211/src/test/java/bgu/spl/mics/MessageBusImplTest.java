@@ -6,7 +6,9 @@ import org.junit.jupiter.api.Test;
 
 import java.bgu.spl.mics.Event;
 import java.bgu.spl.mics.MessageBusImpl;
-import java.bgu.spl.mics.MicroService;
+
+import java.bgu.spl.mics.application.ExampleCallBack;
+import java.bgu.spl.mics.application.ExampleEvent;
 import java.bgu.spl.mics.application.messages.AttackEvent;
 import java.bgu.spl.mics.application.services.HanSoloMicroservice;
 
@@ -31,20 +33,20 @@ class MessageBusImplTest {
     }
 
     @Test
-    void subscribeEvent() {
-
-    }
-
-    @Test
-    void subscribeBroadcast() {
-    }
-
-    @Test
     void complete() {
+        // check that the result matches the type of event
+        MicroService m = new HanSoloMicroservice();
+        ExampleEvent e = new ExampleEvent();
+        ExampleCallBack c = new ExampleCallBack();
+        m.subscribeEvent(e.getClass(), c);
+        messageBus.sendEvent(e);
+        Message message = messageBus.awaitMessage(m);
+        assertEquals(c.getCallbackFunction(), message);
     }
 
     @Test
     void sendBroadcast() {
+
     }
 
     @Test
@@ -53,7 +55,7 @@ class MessageBusImplTest {
 
     @Test
     void register() {
-        MicroService m = new HanSoloMicroservice();
+       MicroService m = new HanSoloMicroservice();
         messageBus.register(m);
         //assertTrue(messageBus.registeredMicroservice);
     }

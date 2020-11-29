@@ -49,7 +49,7 @@ public class MessageBusImpl implements MessageBus {
 
 	@Override
 	public void sendBroadcast(Broadcast b) {
-		//foreach(,icroservice subscribed to b)
+		//foreach(microservice subscribed to b)
 			//microservice.broadcast
 	}
 
