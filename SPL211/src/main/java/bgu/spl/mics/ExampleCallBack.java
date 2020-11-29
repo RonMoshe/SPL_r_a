@@ -1,6 +1,6 @@
 package java.bgu.spl.mics;
 
-public class ExampleCallBack {
+public class ExampleCallBack implements Callback{
 
     private String callbackFunction;
 
@@ -9,4 +9,8 @@ public class ExampleCallBack {
     public ExampleCallBack(String call){callbackFunction = call;}
 
     public String getCallbackFunction(){return callbackFunction;}
+
+    public void call(Object c) {
+
+    }
 }
