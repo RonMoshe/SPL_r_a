@@ -9,10 +9,25 @@ package java.bgu.spl.mics.application.passiveObjects;
  */
 public class Diary {
 
+    private static Diary instance;
     String recording;
 
-    public Diary(){
+    private Diary()
+    {
+
         recording = "";
+
+    }
+
+    //synchronized method to control simultaneous access
+    synchronized public static Diary getInstance()
+    {
+        if (instance == null)
+        {
+            // if instance is null, initialize
+            instance = new Diary();
+        }
+        return instance;
     }
 
     public String getRecording(){return recording;}

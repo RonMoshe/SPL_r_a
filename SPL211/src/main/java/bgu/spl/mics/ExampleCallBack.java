@@ -6,5 +6,7 @@ public class ExampleCallBack {
 
     public ExampleCallBack(){callbackFunction = "Example";}
 
+    public ExampleCallBack(String call){callbackFunction = call;}
+
     public String getCallbackFunction(){return callbackFunction;}
 }

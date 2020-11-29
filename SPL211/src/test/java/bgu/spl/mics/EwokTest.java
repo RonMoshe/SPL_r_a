@@ -11,11 +11,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class EwokTest {
 
-    Ewoks ewoks;
+
 
     @BeforeEach
     void setUp() {
-        ewoks = ewoks.getInstance();
+
     }
 
     @AfterEach
@@ -36,10 +36,7 @@ class EwokTest {
         ewok.acquire();
         assertEquals(ewok.getAvailable(), false);
         ewok.release();
-        assertEquals(ewok.getAvailable(), false);
+        assertEquals(ewok.getAvailable(), true);
     }
 
-    /*@Test
-    void getAvailable() {
-    }*/
 }

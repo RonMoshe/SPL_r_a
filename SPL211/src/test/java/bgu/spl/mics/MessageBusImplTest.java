@@ -31,6 +31,7 @@ class MessageBusImplTest {
     void complete() {
         // check that the result matches the type of event
         MicroService m = new HanSoloMicroservice();
+        messageBus.register(m);
         ExampleEvent e = new ExampleEvent();
         ExampleCallBack c = new ExampleCallBack();
         m.subscribeEvent(e.getClass(), c);
@@ -48,15 +49,20 @@ class MessageBusImplTest {
         MicroService han = new HanSoloMicroservice();
         MicroService c3po = new C3POMicroservice();
         MicroService han2 = new HanSoloMicroservice();
+        messageBus.register(han);
+        messageBus.register(c3po);
+        messageBus.register(han2);
         messageBus.subscribeBroadcast(b.getClass(), han);
         messageBus.subscribeBroadcast(b.getClass(), c3po);
-        try {
-            assertEquals(b.getBroadcastMessage(), messageBus.awaitMessage(han).getMessage());// supposed to have message
-            assertEquals(b.getBroadcastMessage(), messageBus.awaitMessage(c3po).getMessage());// message
-            assertNotEquals(b.getBroadcastMessage(), messageBus.awaitMessage(han2).getMessage());// no message
-        }catch(Exception e){}
         messageBus.sendBroadcast(b);
+        try {//?
+            assertNotNull(messageBus.awaitMessage(han));
+            assertNotNull(messageBus.awaitMessage(c3po));
 
+            //assertEquals(b, messageBus.awaitMessage(han));// supposed to have message
+            //assertEquals(b, messageBus.awaitMessage(c3po));// supposed to have message
+
+        }catch(Exception e){}
     }
 
     @Test
@@ -65,8 +71,14 @@ class MessageBusImplTest {
         ExampleEvent event2 = new ExampleEvent();
         MicroService han = new HanSoloMicroservice();
         MicroService c3po = new C3POMicroservice();
-        messageBus.subscribeEvent((Class<? extends Event<Object>>) event1.getClass(), han);
-        messageBus.subscribeEvent((Class<? extends Event<Object>>) event1.getClass(), c3po);
+        messageBus.register(han);
+        messageBus.register(c3po);
+        ExampleCallBack cH = new ExampleCallBack("han");
+        ExampleCallBack cC = new ExampleCallBack("c3po");
+        han.subscribeEvent(event1.getClass(), cH);
+        c3po.subscribeEvent(event1.getClass(), cC);
+        //messageBus.subscribeEvent((Class<? extends Event<Object>>) event1.getClass(), han);
+        //messageBus.subscribeEvent((Class<? extends Event<Object>>) event1.getClass(), c3po);
         messageBus.sendEvent(event1);
         messageBus.sendEvent(event2);
         Message a = null;
@@ -75,10 +87,12 @@ class MessageBusImplTest {
             a = messageBus.awaitMessage(han);
         }catch(Exception e){}
         assertNotNull(a);
+        assertEquals(cH, a);
         try {
             b = messageBus.awaitMessage(c3po);
         }catch (Exception e){}
         assertNotNull(b);
+        assertEquals(cC, b);
     }
 
     @Test
@@ -88,6 +102,8 @@ class MessageBusImplTest {
         ExampleEvent event3 = new ExampleEvent();
         MicroService han = new HanSoloMicroservice();
         MicroService c3po = new C3POMicroservice();
+        messageBus.register(han);
+        messageBus.register(c3po);
         messageBus.subscribeEvent((Class<? extends Event<Object>>) event1.getClass(), han);
         messageBus.subscribeEvent((Class<? extends Event<Object>>) event1.getClass(), c3po);
         messageBus.sendEvent(event1);
@@ -111,20 +127,15 @@ class MessageBusImplTest {
     }
 
     @Test
-    void register() {
-       MicroService m = new HanSoloMicroservice();
-        messageBus.register(m);
-        //assertTrue(messageBus.registeredMicroservice);
-    }
-
-    @Test
-    void awaitMessage() throws InterruptedException {
+    void awaitMessage() {
         Event<Boolean> e = new AttackEvent();
-        //Class<Event<Boolean>> type = e;
         MicroService m = new HanSoloMicroservice();
         messageBus.register(m);
-        //messageBus.subscribeEvent(type, m);
+        messageBus.subscribeEvent(e.getClass(), m);
         messageBus.sendEvent(e);
-        assertEquals(messageBus.awaitMessage(m), e);
+        try {
+            assertNotNull(messageBus.awaitMessage(m));
+        }catch(Exception a){assertNotNull(null);}//?
+        //assertEquals(messageBus.awaitMessage(m), e);
     }
 }
