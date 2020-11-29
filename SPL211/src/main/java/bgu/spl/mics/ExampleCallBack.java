@@ -1,4 +1,4 @@
-package java.bgu.spl.mics.application;
+package java.bgu.spl.mics;
 
 public class ExampleCallBack {
 

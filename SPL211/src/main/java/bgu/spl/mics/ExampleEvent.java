@@ -1,4 +1,4 @@
-package java.bgu.spl.mics.application;
+package java.bgu.spl.mics;
 
 import java.bgu.spl.mics.Event;
 

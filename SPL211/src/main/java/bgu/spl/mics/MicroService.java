@@ -54,12 +54,11 @@ public abstract class MicroService implements Runnable {
      * @param <E>      The type of event to subscribe to.
      * @param <T>      The type of result expected for the subscribed event.
      * @param type     The {@link Class} representing the type of event to
-     *                 subscribe to.
+ *                 subscribe to.
      * @param callback The callback that should be called when messages of type
-     *                 {@code type} are taken from this micro-service message
-     *                 queue.
+*                 {@code type} are taken from this micro-service message
      */
-    protected final <T, E extends Event<T>> void subscribeEvent(Class<E> type, Callback<E> callback) {
+    protected final <T, E extends Event<T>> void subscribeEvent(Class<? extends ExampleEvent> type, ExampleCallBack callback) {
     	messageBus.subscribeEvent(type, this);
     	//callback.call(new Event<T>());
     }
