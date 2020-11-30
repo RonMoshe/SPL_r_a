@@ -128,7 +128,7 @@ class MessageBusImplTest {
 
     @Test
     void awaitMessage() {
-        Event<Boolean> e = new AttackEvent();
+        AttackEvent e = new AttackEvent();
         MicroService m = new HanSoloMicroservice();
         messageBus.register(m);
         messageBus.subscribeEvent(e.getClass(), m);
