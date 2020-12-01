@@ -19,8 +19,9 @@ public class MessageBusImpl implements MessageBus {
 	private MessageBusImpl()
 	{
 		instance = getInstance();
-		registeredMicroservice = new ArrayList<MicroService>();
-		microserviceMessageQueue = new ArrayList<PriorityQueue<Message>>();
+		registeredMicroservice = new ArrayList<>();
+		microserviceMessageQueue = new ArrayList<>();
+		registrationHashMap = new ConcurrentHashMap<>();
 	}
 
 	//synchronized method to control simultaneous access
@@ -59,11 +60,15 @@ public class MessageBusImpl implements MessageBus {
 
 	@Override
 	public void sendBroadcast(Broadcast b) {
-		ArrayList a = registrationHashMap.get(b);
-		for(int i = 0; i < a.size(); i++){
-			int index = registeredMicroservice.indexOf(a.get(i));
+		ArrayList<MicroService> a = registrationHashMap.get(b);
+		for (Object o : a) {
+			int index = registeredMicroservice.indexOf(o);
 			microserviceMessageQueue.get(index).add(b);
 		}
+		/*for(int i = 0; i < a.size(); i++){
+			int index = registeredMicroservice.indexOf(a.get(i));
+			microserviceMessageQueue.get(index).add(b);
+		}*/
 	}
 
 	
@@ -72,10 +77,10 @@ public class MessageBusImpl implements MessageBus {
 		// microservice uses method to add the event to a different subscribed microservice
 		// round robin
 		// if event not subscribed to return null
-		if(!registrationHashMap.containsKey(e))
+		if(!registrationHashMap.containsKey(e)) {
 			return null;
-		else {
-			ArrayList a = registrationHashMap.get(e);
+		} else {
+			ArrayList<MicroService> a = registrationHashMap.get(e);
 			MicroService m = (MicroService) a.get(0);
 			//round robin implementation - after microservice receives a message it is removed and added
 			// in order to keep a linear order in which subscribed microservices receive event
