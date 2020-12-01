@@ -1,6 +1,4 @@
-package bgu.spl.mics.application.passiveObjects;
-
-import java.bgu.spl.mics.application.passiveObjects.Attack;
+package java.bgu.spl.mics.application.passiveObjects;
 
 public class Input {
     private Attack[] attacks;

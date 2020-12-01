@@ -176,10 +176,11 @@ public abstract class MicroService implements Runnable {
     	initialize();
        //????
         try {
-            Message m = messageBus.awaitMessage(this);
+            Message message = messageBus.awaitMessage(this);
             // retreive callback function and act to get future object
-            Callback c = eventCallbackConcurrentHashMap.get(m);
-            //c.call();  ???
+            Callback callBack = eventCallbackConcurrentHashMap.get(message);
+            //call
+            eventCallbackConcurrentHashMap.get(message.getClass()).call(message);
             // complete
             //complete(new Future<T>());
         } catch (InterruptedException e) {

@@ -14,7 +14,7 @@ public class MessageBusImpl implements MessageBus {
 	private ArrayList<MicroService> registeredMicroservice;
 	private ArrayList<PriorityQueue<Message>> microserviceMessageQueue;
 	private ConcurrentHashMap<Class<? extends Message>, ArrayList<MicroService>> registrationHashMap;
-
+	private ConcurrentHashMap<Class <? extends Message>, Callback> callBacks;
 
 	private MessageBusImpl()
 	{
@@ -81,7 +81,8 @@ public class MessageBusImpl implements MessageBus {
 			return null;
 		} else {
 			ArrayList<MicroService> a = registrationHashMap.get(e);
-			MicroService m = (MicroService) a.get(0);
+			//MicroService m = (MicroService) a.get(0);
+			MicroService m = a.get(0);
 			//round robin implementation - after microservice receives a message it is removed and added
 			// in order to keep a linear order in which subscribed microservices receive event
 			registrationHashMap.get(e).remove(m);
@@ -111,6 +112,7 @@ public class MessageBusImpl implements MessageBus {
 		while(iter.hasNext()){
 			// TRY to remove casting
 			Class<? extends Message> key = (Class<? extends Message>)iter.next();
+			//Object key = iterator.next(); ***OPTIONAL***
 			if(registrationHashMap.get(key).contains(m)){
 				registrationHashMap.get(key).remove(m);
 				if(registrationHashMap.get(key).isEmpty()){
