@@ -44,7 +44,7 @@ class MessageBusImplTest {
     }
 
     @Test
-    void sendBroadcast() throws InterruptedException {
+    void sendBroadcast(){
         ExampleBroadcast b = new ExampleBroadcast();
         MicroService han = new HanSoloMicroservice();
         MicroService c3po = new C3POMicroservice();
