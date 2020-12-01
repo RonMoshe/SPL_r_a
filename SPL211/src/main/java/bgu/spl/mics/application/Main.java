@@ -18,6 +18,9 @@ public class Main {
 		Gson gson = new Gson();
 		try {
 			JsonReader reader = new JsonReader(new FileReader(args[0]));
+			reader.
+
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
