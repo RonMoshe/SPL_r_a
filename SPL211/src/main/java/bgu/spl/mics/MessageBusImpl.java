@@ -1,7 +1,7 @@
 package java.bgu.spl.mics;
 
-import java.util.ArrayList;
-import java.util.PriorityQueue;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The {@link MessageBusImpl class is the implementation of the MessageBus interface.
@@ -12,13 +12,15 @@ public class MessageBusImpl implements MessageBus {
 
 	private static MessageBusImpl instance;
 	private ArrayList<MicroService> registeredMicroservice;
-	private ArrayList<PriorityQueue<Message>> microserviceQueue;
+	private ArrayList<PriorityQueue<Message>> microserviceMessageQueue;
+	private ConcurrentHashMap<Class<? extends Message>, ArrayList<MicroService>> registrationHashMap;
+
 
 	private MessageBusImpl()
 	{
 		instance = getInstance();
 		registeredMicroservice = new ArrayList<MicroService>();
-		microserviceQueue = new ArrayList<PriorityQueue<Message>>();
+		microserviceMessageQueue = new ArrayList<PriorityQueue<Message>>();
 	}
 
 	//synchronized method to control simultaneous access
@@ -34,23 +36,34 @@ public class MessageBusImpl implements MessageBus {
 
 	@Override
 	public <T> void subscribeEvent(Class<? extends Event<T>> type, MicroService m) {
-		// decide what data structure to use...
+		if(!registrationHashMap.containsKey(type)){
+
+			registrationHashMap.putIfAbsent(type, new ArrayList<MicroService>());
+		}
+		registrationHashMap.get(type).add(m);
 	}
 
 	@Override
 	public void subscribeBroadcast(Class<? extends Broadcast> type, MicroService m) {
-		// decide what data structure to use
+		if(!registrationHashMap.containsKey(type)){
+			registrationHashMap.putIfAbsent(type, new ArrayList<MicroService>());
+		}
+		registrationHashMap.get(type).add(m);
     }
 
 	@Override @SuppressWarnings("unchecked")
 	public <T> void complete(Event<T> e, T result) {
 		//?
+
 	}
 
 	@Override
 	public void sendBroadcast(Broadcast b) {
-		//foreach(microservice subscribed to b)
-			//microservice.broadcast
+		ArrayList a = registrationHashMap.get(b);
+		for(int i = 0; i < a.size(); i++){
+			int index = registeredMicroservice.indexOf(a.get(i));
+			microserviceMessageQueue.get(index).add(b);
+		}
 	}
 
 	
@@ -65,7 +78,7 @@ public class MessageBusImpl implements MessageBus {
 	public void register(MicroService m) {
 		registeredMicroservice.add(m);
 		//add queue
-		microserviceQueue.add(new PriorityQueue<Message>());
+		microserviceMessageQueue.add(new PriorityQueue<Message>());
 	}
 
 	@Override
@@ -73,18 +86,28 @@ public class MessageBusImpl implements MessageBus {
 		int i = registeredMicroservice.indexOf(m);
 		registeredMicroservice.remove(i);
 		//remove queue
-		microserviceQueue.remove(i);
+		microserviceMessageQueue.remove(i);
+		//registrationHashMap.forEac;
+		Set keys = registrationHashMap.keySet();
+		Iterator iter = keys.iterator();
+		while(iter.hasNext()){
+			// TRY to remove casting
+			Class<? extends Message> key = (Class<? extends Message>)iter.next();
+			if(registrationHashMap.get(key).contains(m)){
+				registrationHashMap.get(key).remove(m);
+			}
+		}
 	}
 
 	@Override
 	public Message awaitMessage(MicroService m)  throws InterruptedException {
 		int index = registeredMicroservice.indexOf(m);
 		// throw exception???
-		while(microserviceQueue.get(index).isEmpty()){
+		while(microserviceMessageQueue.get(index).isEmpty()){
 			m.wait(1);
 		}
-		Message mes = microserviceQueue.get(index).peek();
-		microserviceQueue.get(index).remove(mes);
+		Message mes = microserviceMessageQueue.get(index).peek();
+		microserviceMessageQueue.get(index).remove(mes);
 		return mes;
 	}
 }

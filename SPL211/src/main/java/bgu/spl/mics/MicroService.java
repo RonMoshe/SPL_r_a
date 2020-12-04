@@ -2,6 +2,7 @@ package java.bgu.spl.mics;
 
 import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The MicroService is an abstract class that any micro-service in the system
@@ -27,7 +28,7 @@ public abstract class MicroService implements Runnable {
 
     private java.bgu.spl.mics.MessageBusImpl messageBus;
 
-
+    private ConcurrentHashMap<Event, Callback> eventCallbackConcurrentHashMap;
 
     /**
      * @param name the micro-service name (used mainly for debugging purposes -

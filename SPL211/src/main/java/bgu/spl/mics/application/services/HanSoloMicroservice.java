@@ -17,9 +17,10 @@ import java.bgu.spl.mics.MicroService;
  */
 public class HanSoloMicroservice extends MicroService {
 
-    enum Class {
+    enum Event {
         AttackEvent,
-        DeactivationEvent
+        DeactivationEvent,
+        BombDestroyerEvent
     }
 
     public HanSoloMicroservice() {
@@ -30,6 +31,6 @@ public class HanSoloMicroservice extends MicroService {
     @Override
     protected void initialize() {
         // subscribe to handle attack events
-        //subscribeEvent(Class.AttackEvent, new ExampleCallBack());
+        subscribeEvent(Event.AttackEvent.getClass(), new ExampleCallBack());
     }
 }
