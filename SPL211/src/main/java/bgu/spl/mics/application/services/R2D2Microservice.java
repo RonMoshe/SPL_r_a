@@ -1,6 +1,7 @@
 package java.bgu.spl.mics.application.services;
 
 import java.bgu.spl.mics.MicroService;
+import  java.bgu.spl.mics.application.messages.DeactivationEvent;
 
 /**
  * R2D2Microservices is in charge of the handling {@link DeactivationEvent}.
@@ -16,8 +17,9 @@ public class R2D2Microservice extends MicroService {
         super("R2D2");
     }
 
+
     @Override
     protected void initialize() {
-
+    // subscribe to handle deactivation events
     }
 }

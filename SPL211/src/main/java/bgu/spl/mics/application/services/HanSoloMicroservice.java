@@ -1,6 +1,9 @@
 package java.bgu.spl.mics.application.services;
 
 
+import java.bgu.spl.mics.Callback;
+import java.bgu.spl.mics.Event;
+import java.bgu.spl.mics.ExampleCallBack;
 import java.bgu.spl.mics.application.messages.AttackEvent;
 import java.bgu.spl.mics.MicroService;
 
@@ -14,6 +17,11 @@ import java.bgu.spl.mics.MicroService;
  */
 public class HanSoloMicroservice extends MicroService {
 
+    enum Class {
+        AttackEvent,
+        DeactivationEvent
+    }
+
     public HanSoloMicroservice() {
         super("Han");
     }
@@ -21,6 +29,7 @@ public class HanSoloMicroservice extends MicroService {
 
     @Override
     protected void initialize() {
-
+        // subscribe to handle attack events
+        //subscribeEvent(Class.AttackEvent, new ExampleCallBack());
     }
 }

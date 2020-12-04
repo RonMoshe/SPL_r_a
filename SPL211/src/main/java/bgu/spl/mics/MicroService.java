@@ -27,6 +27,8 @@ public abstract class MicroService implements Runnable {
 
     private java.bgu.spl.mics.MessageBusImpl messageBus;
 
+
+
     /**
      * @param name the micro-service name (used mainly for debugging purposes -
      *             does not have to be unique)
@@ -35,6 +37,7 @@ public abstract class MicroService implements Runnable {
         this.name = name;
 
         this.messageBus = messageBus.getInstance();
+        initialize();
 
     }
 

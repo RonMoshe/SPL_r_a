@@ -21,7 +21,8 @@ public class C3POMicroservice extends MicroService {
 
     @Override
     protected void initialize() {
-
+        // subscribe to handle attack events
+        //subscribeEvent(ActivationEvent.getClass(), );
     }
 
 

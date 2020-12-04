@@ -77,8 +77,8 @@ class MessageBusImplTest {
         ExampleCallBack cC = new ExampleCallBack("c3po");
         han.subscribeEvent(event1.getClass(), cH);
         c3po.subscribeEvent(event1.getClass(), cC);
-        //messageBus.subscribeEvent((Class<? extends Event<Object>>) event1.getClass(), han);
-        //messageBus.subscribeEvent((Class<? extends Event<Object>>) event1.getClass(), c3po);
+        messageBus.subscribeEvent((Class<? extends Event<Object>>) event1.getClass(), han);
+        messageBus.subscribeEvent((Class<? extends Event<Object>>) event1.getClass(), c3po);
         messageBus.sendEvent(event1);
         messageBus.sendEvent(event2);
         Message a = null;
@@ -138,4 +138,6 @@ class MessageBusImplTest {
         }catch(Exception a){assertNotNull(null);}//?
         //assertEquals(messageBus.awaitMessage(m), e);
     }
+
+
 }
