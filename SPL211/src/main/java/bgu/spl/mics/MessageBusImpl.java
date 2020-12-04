@@ -34,12 +34,12 @@ public class MessageBusImpl implements MessageBus {
 
 	@Override
 	public <T> void subscribeEvent(Class<? extends Event<T>> type, MicroService m) {
-		//m.subscribeEvent(type, );
+		// decide what data structure to use...
 	}
 
 	@Override
 	public void subscribeBroadcast(Class<? extends Broadcast> type, MicroService m) {
-
+		// decide what data structure to use
     }
 
 	@Override @SuppressWarnings("unchecked")
@@ -57,6 +57,7 @@ public class MessageBusImpl implements MessageBus {
 	@Override
 	public <T> Future<T> sendEvent(Event<T> e) {
 		// microservice uses method to add the event to a different subscribed microservice
+		// round robin
         return null;
 	}
 
@@ -76,11 +77,11 @@ public class MessageBusImpl implements MessageBus {
 	}
 
 	@Override
-	public Message awaitMessage(MicroService m) throws InterruptedException {
+	public Message awaitMessage(MicroService m)  throws InterruptedException {
 		int index = registeredMicroservice.indexOf(m);
 		// throw exception???
 		while(microserviceQueue.get(index).isEmpty()){
-			wait();
+			m.wait(1);
 		}
 		Message mes = microserviceQueue.get(index).peek();
 		microserviceQueue.get(index).remove(mes);

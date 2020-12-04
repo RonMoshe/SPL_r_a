@@ -141,7 +141,7 @@ public abstract class MicroService implements Runnable {
      * message.
      */
     protected final void terminate() {
-    	
+    	this.terminate(); //???
     }
 
     /**
@@ -163,6 +163,9 @@ public abstract class MicroService implements Runnable {
        //????
         try {
             Message m = messageBus.awaitMessage(this);
+            // retreive callback function and act to get future object
+            // complete
+            complete(new Future<T>());
         } catch (InterruptedException e) {
             //??????????????????????;
         }

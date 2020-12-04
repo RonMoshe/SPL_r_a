@@ -1,6 +1,8 @@
 package java.bgu.spl.mics.application.passiveObjects;
 
 
+import java.util.ArrayList;
+
 /**
  * Passive object representing the resource manager.
  * <p>
@@ -14,10 +16,17 @@ public class Ewoks {
     // accessed by only by getInstance() method
     private static Ewoks instance;
 
-    private Ewoks()
+    private ArrayList<Ewok> ewokList;
+
+    private Ewoks(/*int amount*/) // how to initialize ewok array properly
     {
-        // private constructor
+        // Collection of ewok
+        ewokList = new ArrayList<Ewok>();
+        /*for(int i = 0; i < amount; i++){
+            ewokList.add(new Ewok(i+1));
+        }*/
     }
+
 
     //synchronized method to control simultaneous access
     synchronized public static Ewoks getInstance()
@@ -28,6 +37,17 @@ public class Ewoks {
             instance = new Ewoks();
         }
         return instance;
+    }
+
+    // decide what would be most efficient way
+    private boolean acquire(){
+        for(int i = 0; i < ewokList.size(); i++){
+            if(ewokList.get(i).getAvailable()){
+                ewokList.get(i).acquire();
+                return true;
+            }
+        }
+        return false;
     }
 }
 
