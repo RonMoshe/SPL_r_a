@@ -71,6 +71,15 @@ public class MessageBusImpl implements MessageBus {
 	public <T> Future<T> sendEvent(Event<T> e) {
 		// microservice uses method to add the event to a different subscribed microservice
 		// round robin
+		ArrayList a = registrationHashMap.get(e);
+		MicroService m = (MicroService) a.get(0);
+		//round robin implementation - after microservice receives a message it is removed and added
+		// in order to keep a linear order in which subscribed microservices receive event
+		registrationHashMap.get(e).remove(m);
+		registrationHashMap.get(e).add(m);
+		int index = registeredMicroservice.indexOf(m);
+		microserviceMessageQueue.get(index).add(e);
+
         return null;
 	}
 

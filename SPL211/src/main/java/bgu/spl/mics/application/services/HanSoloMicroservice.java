@@ -31,6 +31,6 @@ public class HanSoloMicroservice extends MicroService {
     @Override
     protected void initialize() {
         // subscribe to handle attack events
-        subscribeEvent(Event.AttackEvent.getClass(), new ExampleCallBack());
+        //subscribeEvent(Event.AttackEvent.getClass(), new ExampleCallBack());
     }
 }

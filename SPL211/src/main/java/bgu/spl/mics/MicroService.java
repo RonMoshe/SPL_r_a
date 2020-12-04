@@ -166,7 +166,7 @@ public abstract class MicroService implements Runnable {
             Message m = messageBus.awaitMessage(this);
             // retreive callback function and act to get future object
             // complete
-            complete(new Future<T>());
+            //complete(new Future<T>());
         } catch (InterruptedException e) {
             //??????????????????????;
         }
