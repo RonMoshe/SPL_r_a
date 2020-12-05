@@ -118,7 +118,7 @@ public abstract class MicroService implements Runnable {
      */
     protected final <T> Future<T> sendEvent(Event<T> e) {
     	return messageBus.sendEvent(e);
-        //return null;
+
     }
 
     /**
@@ -178,6 +178,8 @@ public abstract class MicroService implements Runnable {
         try {
             Message m = messageBus.awaitMessage(this);
             // retreive callback function and act to get future object
+            Callback c = eventCallbackConcurrentHashMap.get(m);
+            //c.call();  ???
             // complete
             //complete(new Future<T>());
         } catch (InterruptedException e) {
