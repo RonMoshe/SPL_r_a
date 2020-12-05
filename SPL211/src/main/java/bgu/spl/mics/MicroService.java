@@ -28,7 +28,7 @@ public abstract class MicroService implements Runnable {
 
     private java.bgu.spl.mics.MessageBusImpl messageBus;
 
-    private ConcurrentHashMap<Event, Callback> eventCallbackConcurrentHashMap;
+    private ConcurrentHashMap<Class<? extends Message>, Callback> eventCallbackConcurrentHashMap;
 
     /**
      * @param name the micro-service name (used mainly for debugging purposes -
@@ -38,8 +38,20 @@ public abstract class MicroService implements Runnable {
         this.name = name;
 
         this.messageBus = messageBus.getInstance();
+        this.eventCallbackConcurrentHashMap = new ConcurrentHashMap<Class<? extends Message>, Callback>();
         initialize();
+    }
 
+    public void AddEvent(Class<? extends Message> event, Callback callback){
+        eventCallbackConcurrentHashMap.put(event, callback);
+    }
+
+    public void RemoveEvent(Class<? extends Message> event){
+        eventCallbackConcurrentHashMap.remove(event);
+    }
+
+    public Callback getCallback(Event event){
+        return eventCallbackConcurrentHashMap.get(event);
     }
 
     /**
@@ -64,7 +76,7 @@ public abstract class MicroService implements Runnable {
      */
     protected final <T, E extends Event<T>> void subscribeEvent(Class<E> type, Callback<E> callback) {
         messageBus.subscribeEvent(type, this);
-        //callback.call(new Event<T>());
+        eventCallbackConcurrentHashMap.put(type, callback);
     }
 
     /**
@@ -88,7 +100,8 @@ public abstract class MicroService implements Runnable {
      *                 queue.
      */
     protected final <B extends Broadcast> void subscribeBroadcast(Class<B> type, Callback<B> callback) {
-    	
+    	messageBus.subscribeBroadcast(type, this);
+    	eventCallbackConcurrentHashMap.put(type, callback);
     }
 
     /**
