@@ -2,12 +2,15 @@ package java.bgu.spl.mics.application;
 
 import java.bgu.spl.mics.application.messages.AttackEvent;
 import java.bgu.spl.mics.application.passiveObjects.Attack;
+import java.bgu.spl.mics.application.passiveObjects.Diary;
 import java.bgu.spl.mics.application.passiveObjects.Ewoks;
 import java.bgu.spl.mics.application.passiveObjects.Input;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
+import java.bgu.spl.mics.application.services.HanSoloMicroservice;
 import java.bgu.spl.mics.application.services.LandoMicroservice;
+import java.bgu.spl.mics.application.services.LeiaMicroservice;
 import java.bgu.spl.mics.application.services.R2D2Microservice;
 import java.io.FileReader;
 import java.io.IOException;
@@ -27,7 +30,10 @@ public class Main {
 			Ewoks ewoks = Ewoks.getInstance(json.getEwoks());
 			LandoMicroservice landoMS = new LandoMicroservice(json.getLando());
 			R2D2Microservice R2D2MS = new R2D2Microservice(json.getR2D2());
+			HanSoloMicroservice HanMS = new HanSoloMicroservice();
+			Diary diary = Diary.getInstance();
 			Attack[] attacks = json.getAttacks();
+			LeiaMicroservice LeiaMS = new LeiaMicroservice(attacks);
 			System.out.println("read");
 			//Input json = Input.
 

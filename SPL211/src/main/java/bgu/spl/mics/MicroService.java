@@ -1,5 +1,6 @@
 package java.bgu.spl.mics;
 
+import java.bgu.spl.mics.application.messages.TerminationBroadcast;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
@@ -174,6 +175,7 @@ public abstract class MicroService implements Runnable {
     public final void run() {
         messageBus.register(this);
     	initialize();
+
        //????
         try {
             Message message = messageBus.awaitMessage(this);

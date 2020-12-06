@@ -5,6 +5,6 @@ package java.bgu.spl.mics;
  */
 public interface Callback<T> {
 
-    public void call(T c); // call for resources
+    public void call(T c); // call for resources in case of attack
 
 }
