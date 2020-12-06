@@ -1,6 +1,9 @@
 package java.bgu.spl.mics.application.services;
 
+import java.bgu.spl.mics.ExampleCallBack;
 import java.bgu.spl.mics.MicroService;
+import java.bgu.spl.mics.application.messages.BombDestroyerEvent;
+import java.bgu.spl.mics.application.messages.TerminationBroadcast;
 
 /**
  * LandoMicroservice
@@ -15,6 +18,10 @@ public class LandoMicroservice  extends MicroService {
 
     @Override
     protected void initialize() {
-       
+        TerminationBroadcast a = new TerminationBroadcast();
+        ExampleCallBack c = new ExampleCallBack();
+        subscribeBroadcast(a.getClass() , c);
+        BombDestroyerEvent b = new BombDestroyerEvent();
+        subscribeEvent(b.getClass(), c);
     }
 }

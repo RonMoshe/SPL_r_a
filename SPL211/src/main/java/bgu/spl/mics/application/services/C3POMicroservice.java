@@ -2,8 +2,10 @@ package java.bgu.spl.mics.application.services;
 
 import java.bgu.spl.mics.Callback;
 import java.bgu.spl.mics.Event;
+import java.bgu.spl.mics.ExampleCallBack;
 import java.bgu.spl.mics.MicroService;
 import java.bgu.spl.mics.application.messages.AttackEvent;
+import java.bgu.spl.mics.application.messages.TerminationBroadcast;
 
 /**
  * C3POMicroservices is in charge of the handling {@link AttackEvent}.
@@ -23,6 +25,11 @@ public class C3POMicroservice extends MicroService {
     protected void initialize() {
         // subscribe to handle attack events
         //subscribeEvent(ActivationEvent.getClass(), );
+        TerminationBroadcast a = new TerminationBroadcast();
+        ExampleCallBack c = new ExampleCallBack();
+        subscribeBroadcast(a.getClass() , c);
+        AttackEvent attackEvent = new AttackEvent();
+        subscribeEvent(attackEvent.getClass(), c);
     }
 
 

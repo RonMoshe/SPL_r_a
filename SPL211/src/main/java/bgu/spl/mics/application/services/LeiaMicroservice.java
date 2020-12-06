@@ -35,6 +35,5 @@ public class LeiaMicroservice extends MicroService {
     	for(int i = 0; i < attacks.length; i++){
     	    sendEvent(new AttackEvent(attacks[i]));
         }
-
     }
 }

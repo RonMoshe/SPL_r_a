@@ -6,6 +6,7 @@ import java.bgu.spl.mics.Event;
 import java.bgu.spl.mics.ExampleCallBack;
 import java.bgu.spl.mics.application.messages.AttackEvent;
 import java.bgu.spl.mics.MicroService;
+import java.bgu.spl.mics.application.messages.TerminationBroadcast;
 
 /**
  * HanSoloMicroservices is in charge of the handling {@link AttackEvent}.
@@ -32,5 +33,10 @@ public class HanSoloMicroservice extends MicroService {
     protected void initialize() {
         // subscribe to handle attack events
         //subscribeEvent(Event.AttackEvent.getClass(), new ExampleCallBack());
+        TerminationBroadcast a = new TerminationBroadcast();
+        ExampleCallBack c = new ExampleCallBack();
+        subscribeBroadcast(a.getClass() , c);
+        AttackEvent attackEvent = new AttackEvent();
+        subscribeEvent(attackEvent.getClass(), c);
     }
 }

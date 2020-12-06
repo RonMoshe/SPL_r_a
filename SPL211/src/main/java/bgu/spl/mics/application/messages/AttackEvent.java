@@ -12,6 +12,8 @@ public class AttackEvent implements Event<Future> {
         this.attack = attack;
     }
 
+    public AttackEvent(){}
+
     public List<Integer> getSerials(){
         return attack.getSerials();
     }

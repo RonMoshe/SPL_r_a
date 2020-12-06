@@ -2,6 +2,7 @@ package java.bgu.spl.mics.application.passiveObjects;
 
 
 import java.bgu.spl.mics.MicroService;
+import java.bgu.spl.mics.application.services.C3POMicroservice;
 import java.bgu.spl.mics.application.services.HanSoloMicroservice;
 
 /**
@@ -53,8 +54,9 @@ public class Diary {
 
     public void addAttack(MicroService m){
         // check that microservice can add attack
-        //if(m.getClass() )
-        totalAttacks++;
+        // find a better way to do this
+        if(m instanceof HanSoloMicroservice || m instanceof C3POMicroservice)
+            totalAttacks++;
     }
 
 }
