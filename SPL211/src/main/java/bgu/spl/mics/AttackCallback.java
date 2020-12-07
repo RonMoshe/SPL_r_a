@@ -3,7 +3,6 @@ package java.bgu.spl.mics;
 import java.bgu.spl.mics.application.messages.AttackEvent;
 import java.bgu.spl.mics.application.passiveObjects.Diary;
 import java.bgu.spl.mics.application.passiveObjects.Ewoks;
-import java.util.ArrayList;
 import java.util.List;
 
 public class AttackCallback implements Callback {

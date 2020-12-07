@@ -1,7 +1,9 @@
 package java.bgu.spl.mics.application.services;
 
+import java.bgu.spl.mics.DeactivationCallback;
 import java.bgu.spl.mics.ExampleCallBack;
 import java.bgu.spl.mics.MicroService;
+import java.bgu.spl.mics.TerminationCallback;
 import  java.bgu.spl.mics.application.messages.DeactivationEvent;
 import java.bgu.spl.mics.application.messages.TerminationBroadcast;
 
@@ -22,11 +24,15 @@ public class R2D2Microservice extends MicroService {
 
     @Override
     protected void initialize() {
-    // subscribe to handle deactivation events
-        TerminationBroadcast a = new TerminationBroadcast();
-        ExampleCallBack c = new ExampleCallBack();
-        subscribeBroadcast(a.getClass() , c);
-        DeactivationEvent b = new DeactivationEvent();
-        subscribeEvent(b.getClass(), c);
+
+        // subscribe to termination broadcast
+        TerminationBroadcast terminationBroadcast = new TerminationBroadcast();
+        TerminationCallback terminationCallback = new TerminationCallback(this);
+        subscribeBroadcast(terminationBroadcast.getClass() , terminationCallback);
+
+        // subscribe to handle deactivation events
+        DeactivationEvent deactivationEvent = new DeactivationEvent();
+        DeactivationCallback deactivationCallback = new DeactivationCallback(this);
+        subscribeEvent(deactivationEvent.getClass(), deactivationCallback);
     }
 }

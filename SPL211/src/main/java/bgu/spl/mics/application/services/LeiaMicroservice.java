@@ -3,6 +3,7 @@ package java.bgu.spl.mics.application.services;
 import javax.security.auth.callback.Callback;
 import java.bgu.spl.mics.ExampleCallBack;
 import java.bgu.spl.mics.Message;
+import java.bgu.spl.mics.TerminationCallback;
 import java.bgu.spl.mics.application.messages.TerminationBroadcast;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +30,11 @@ public class LeiaMicroservice extends MicroService {
 
     @Override
     protected void initialize() {
-        TerminationBroadcast a = new TerminationBroadcast();
-        ExampleCallBack c = new ExampleCallBack();
-        subscribeBroadcast(a.getClass() , c);
+        // subscribe to termination broadcast
+        TerminationBroadcast terminationBroadcast = new TerminationBroadcast();
+        TerminationCallback terminationCallback = new TerminationCallback(this);
+        subscribeBroadcast(terminationBroadcast.getClass() , terminationCallback);
+        // send attack events to be handled by message bus
     	for(int i = 0; i < attacks.length; i++){
     	    sendEvent(new AttackEvent(attacks[i]));
         }
