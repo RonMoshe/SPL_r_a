@@ -26,6 +26,9 @@ public class AttackCallback implements Callback {
             microService.wait(e.getDuration());
         }catch (Exception x){}
         // do you release resources at the end?
+        try {
+            microService.wait(((AttackEvent) c).getDuration());
+        }catch(Exception x){}
         diary.addAttack(microService);
     }
 }

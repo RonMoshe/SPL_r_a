@@ -17,8 +17,11 @@ import java.bgu.spl.mics.application.messages.TerminationBroadcast;
  */
 public class R2D2Microservice extends MicroService {
 
+    private long duration;
+
     public R2D2Microservice(long duration) {
         super("R2D2");
+        this.duration = duration;
     }
 
 
@@ -32,7 +35,7 @@ public class R2D2Microservice extends MicroService {
 
         // subscribe to handle deactivation events
         DeactivationEvent deactivationEvent = new DeactivationEvent();
-        DeactivationCallback deactivationCallback = new DeactivationCallback(this);
+        DeactivationCallback deactivationCallback = new DeactivationCallback(this, duration);
         subscribeEvent(deactivationEvent.getClass(), deactivationCallback);
     }
 }

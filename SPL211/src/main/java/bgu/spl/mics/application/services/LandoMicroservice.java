@@ -14,8 +14,11 @@ import java.bgu.spl.mics.application.messages.TerminationBroadcast;
  */
 public class LandoMicroservice  extends MicroService {
 
+    private long duration;
+
     public LandoMicroservice(long duration) {
         super("Lando");
+        this.duration = duration;
     }
 
     @Override
@@ -27,7 +30,11 @@ public class LandoMicroservice  extends MicroService {
 
         // subscribe to handle bomb destroyer events
         BombDestroyerEvent bombDestroyerEvent = new BombDestroyerEvent();
-        BombDestroyerCallback bombDestroyerCallback = new BombDestroyerCallback(this);
+        BombDestroyerCallback bombDestroyerCallback = new BombDestroyerCallback(this, duration);
         subscribeEvent(bombDestroyerEvent.getClass(), bombDestroyerCallback);
+    }
+
+    public long getDuration() {
+        return duration;
     }
 }

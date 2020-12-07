@@ -59,4 +59,45 @@ public class Diary {
             totalAttacks++;
     }
 
+    public void setC3POFinish(long c3POFinish) {
+        C3POFinish = c3POFinish;
+    }
+
+    public int getTotalAttacks() {
+        return totalAttacks;
+    }
+
+    public void setHanSoloFinish(long hanSoloFinish) {
+        HanSoloFinish = hanSoloFinish;
+    }
+
+    public void setC3POTerminate(long c3POTerminate) {
+        C3POTerminate = c3POTerminate;
+    }
+
+    public void setHanSoloTerminate(long hanSoloTerminate) {
+        HanSoloTerminate = hanSoloTerminate;
+    }
+
+    public static void setInstance(Diary instance) {
+        Diary.instance = instance;
+    }
+
+    public void setLandoTerminate(long landoTerminate) {
+        LandoTerminate = landoTerminate;
+    }
+
+    public void setLeiaTerminate(long leiaTerminate) {
+        LeiaTerminate = leiaTerminate;
+    }
+
+    public void setR2D2Deactivate(long r2D2Deactivate) {
+        R2D2Deactivate = r2D2Deactivate;
+    }
+
+    public void setR2D2Terminate(long r2D2Terminate) {
+        R2D2Terminate = r2D2Terminate;
+    }
+
+
 }
