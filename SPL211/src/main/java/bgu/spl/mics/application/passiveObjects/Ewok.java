@@ -8,12 +8,12 @@ package java.bgu.spl.mics.application.passiveObjects;
  */
 public class Ewok {
 
-	int serialNumber;
-	boolean available;
+	private int serialNumber;
+	private boolean available;
 
 	public Ewok(int serialNumber){
 	    this.serialNumber = serialNumber;
-	    available = true;
+	    this.available = true;
     }
   
     /**

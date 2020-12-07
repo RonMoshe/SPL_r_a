@@ -1,10 +1,8 @@
 package java.bgu.spl.mics;
 
 import java.util.*;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.PriorityBlockingQueue;
-import java.util.concurrent.TimeUnit;
 
 /**
  * The {@link MessageBusImpl class is the implementation of the MessageBus interface.
@@ -18,7 +16,6 @@ public class MessageBusImpl implements MessageBus {
 	// use of blocking queue - can you explain this example please(from forum)
 	private ArrayList<PriorityBlockingQueue<Message>> microserviceMessageQueue;
 	private ConcurrentHashMap<Class<? extends Message>, ArrayList<MicroService>> registrationHashMap;
-	private ConcurrentHashMap<Class <? extends Message>, Callback> callBacks;
 
 	private MessageBusImpl()
 	{

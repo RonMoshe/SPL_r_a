@@ -3,11 +3,6 @@ package java.bgu.spl.mics.application.services;
 
 import java.bgu.spl.mics.*;
 import java.bgu.spl.mics.application.messages.AttackEvent;
-import java.bgu.spl.mics.application.messages.TerminationBroadcast;
-import java.bgu.spl.mics.application.passiveObjects.Attack;
-import java.bgu.spl.mics.application.passiveObjects.Diary;
-
-import static java.lang.System.currentTimeMillis;
 
 /**
  * HanSoloMicroservices is in charge of the handling {@link AttackEvent}.
@@ -19,16 +14,9 @@ import static java.lang.System.currentTimeMillis;
  */
 public class HanSoloMicroservice extends MicroService {
 
-    enum Event {
-        AttackEvent,
-        DeactivationEvent,
-        BombDestroyerEvent
-    }
-
     public HanSoloMicroservice() {
         super("Han");
     }
-
 
     @Override
     protected void initialize() {
@@ -37,8 +25,6 @@ public class HanSoloMicroservice extends MicroService {
         AttackEvent attackEvent = new AttackEvent();
         AttackCallback attackCallback = new AttackCallback(this);
         subscribeEvent(attackEvent.getClass(), attackCallback);
-
-
 
     }
 

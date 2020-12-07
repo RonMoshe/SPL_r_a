@@ -2,7 +2,6 @@ package java.bgu.spl.mics.application.services;
 
 import java.bgu.spl.mics.*;
 import java.bgu.spl.mics.application.messages.AttackEvent;
-import java.bgu.spl.mics.application.messages.TerminationBroadcast;
 
 /**
  * C3POMicroservices is in charge of the handling {@link AttackEvent}.

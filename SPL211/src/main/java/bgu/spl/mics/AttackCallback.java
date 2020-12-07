@@ -24,8 +24,8 @@ public class AttackCallback implements Callback {
         List<Integer> resourceList = e.getSerials();
 
         // acquiring necessary ewok objects for attack
-        for(int i = 0; i < resourceList.size(); i++){
-            while(!ewoks.acquire(resourceList.get(i))){
+        for(Integer ewokSerialNumber : resourceList){
+            while(!ewoks.acquire(ewokSerialNumber)){
                 try {
                     wait();
                 }catch(InterruptedException x){}
@@ -39,8 +39,8 @@ public class AttackCallback implements Callback {
         // do you release resources at the end?
 
         // attack has ended - resources-ewok objects are released
-        for(int i = 0; i < resourceList.size(); i++){
-            ewoks.release(resourceList.get(i));
+        for(Integer ewokSerialNumber : resourceList){
+            ewoks.release(ewokSerialNumber);
         }
 
         // attack is added in diary

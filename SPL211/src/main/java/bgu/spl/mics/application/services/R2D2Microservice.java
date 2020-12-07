@@ -1,14 +1,8 @@
 package java.bgu.spl.mics.application.services;
 
 import java.bgu.spl.mics.DeactivationCallback;
-import java.bgu.spl.mics.ExampleCallBack;
 import java.bgu.spl.mics.MicroService;
-import java.bgu.spl.mics.TerminationCallback;
 import  java.bgu.spl.mics.application.messages.DeactivationEvent;
-import java.bgu.spl.mics.application.messages.TerminationBroadcast;
-import java.bgu.spl.mics.application.passiveObjects.Diary;
-
-import static java.lang.System.currentTimeMillis;
 
 /**
  * R2D2Microservices is in charge of the handling {@link DeactivationEvent}.

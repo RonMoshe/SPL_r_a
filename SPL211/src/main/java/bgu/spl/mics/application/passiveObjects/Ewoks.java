@@ -61,9 +61,7 @@ public class Ewoks {
         ewokList.get(serialNumber).release();
     }
 
-    public int getAmountEwok(){
-        return amountEwok;
-    }
+    //public int getAmountEwok(){ return amountEwok; }
 }
 
 

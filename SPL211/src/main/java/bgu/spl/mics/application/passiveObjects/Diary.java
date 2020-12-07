@@ -2,8 +2,6 @@ package java.bgu.spl.mics.application.passiveObjects;
 
 
 import java.bgu.spl.mics.MicroService;
-import java.bgu.spl.mics.application.services.C3POMicroservice;
-import java.bgu.spl.mics.application.services.HanSoloMicroservice;
 
 /**
  * Passive data-object representing a Diary - in which the flow of the battle is recorded.

@@ -1,20 +1,11 @@
 package java.bgu.spl.mics.application.services;
 
-import javax.security.auth.callback.Callback;
-import java.bgu.spl.mics.ExampleCallBack;
-import java.bgu.spl.mics.Message;
-import java.bgu.spl.mics.TerminationCallback;
-import java.bgu.spl.mics.application.messages.DeactivationEvent;
-import java.bgu.spl.mics.application.messages.TerminationBroadcast;
-import java.bgu.spl.mics.application.passiveObjects.Diary;
-import java.util.ArrayList;
-import java.util.List;
 
+import java.bgu.spl.mics.application.messages.DeactivationEvent;
+import java.bgu.spl.mics.application.passiveObjects.Diary;
 import java.bgu.spl.mics.MicroService;
 import java.bgu.spl.mics.application.passiveObjects.Attack;
 import java.bgu.spl.mics.application.messages.AttackEvent;
-
-import static java.lang.System.currentTimeMillis;
 
 /**
  * LeiaMicroservices Initialized with Attack objects, and sends them as  {@link AttackEvent}.
@@ -36,8 +27,8 @@ public class LeiaMicroservice extends MicroService {
     protected void initialize() {
 
         // send attack events to be handled by message bus
-    	for(int i = 0; i < attacks.length; i++){
-    	    sendEvent(new AttackEvent(attacks[i]));
+        for(Attack attack : attacks){
+    	    sendEvent(new AttackEvent(attack));
         }
 
     	Diary diary = Diary.getInstance();

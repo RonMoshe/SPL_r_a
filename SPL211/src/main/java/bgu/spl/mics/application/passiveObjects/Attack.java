@@ -10,8 +10,8 @@ import java.util.List;
  * YDo not add any additional members/method to this class (except for getters).
  */
 public class Attack {
-    final List<Integer> serials;
-    final int duration;
+    final private List<Integer> serials;
+    final private int duration;
 
     /**
      * Constructor.

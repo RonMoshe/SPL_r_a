@@ -1,11 +1,9 @@
 package java.bgu.spl.mics.application.services;
 
 import java.bgu.spl.mics.BombDestroyerCallback;
-import java.bgu.spl.mics.ExampleCallBack;
 import java.bgu.spl.mics.MicroService;
-import java.bgu.spl.mics.TerminationCallback;
 import java.bgu.spl.mics.application.messages.BombDestroyerEvent;
-import java.bgu.spl.mics.application.messages.TerminationBroadcast;
+
 
 /**
  * LandoMicroservice
@@ -32,9 +30,7 @@ public class LandoMicroservice  extends MicroService {
 
     }
 
-    public long getDuration() {
-        return duration;
-    }
+    //public long getDuration() {return duration;}
 
 
 }

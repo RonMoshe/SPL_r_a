@@ -1,7 +1,6 @@
 package java.bgu.spl.mics;
 
 import java.bgu.spl.mics.application.passiveObjects.Diary;
-import java.bgu.spl.mics.application.services.*;
 
 import static java.lang.System.currentTimeMillis;
 
