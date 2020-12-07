@@ -1,8 +1,7 @@
 package java.bgu.spl.mics;
 
+
 import java.bgu.spl.mics.application.messages.TerminationBroadcast;
-import java.util.PriorityQueue;
-import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -42,10 +41,17 @@ public abstract class MicroService implements Runnable {
         this.terminate = false;
         this.messageBus = MessageBusImpl.getInstance();
         this.eventCallbackConcurrentHashMap = new ConcurrentHashMap<Class<? extends Message>, Callback>();
+
+        // subscribe to termination broadcast - all microservices are subscribed to this broadcasts that signals
+        // to all threads to terminate when program ends
+        TerminationBroadcast terminationBroadcast = new TerminationBroadcast();
+        TerminationCallback terminationCallback = new TerminationCallback(this);
+        subscribeBroadcast(terminationBroadcast.getClass() , terminationCallback);
+        // subscribes to broadcasts and events for specific microservice type
         initialize();
     }
 
-    public void AddEvent(Class<? extends Message> event, Callback callback){
+    /*public void AddEvent(Class<? extends Message> event, Callback callback){
         eventCallbackConcurrentHashMap.put(event, callback);
     }
 
@@ -55,7 +61,7 @@ public abstract class MicroService implements Runnable {
 
     public Callback getCallback(Event event){
         return eventCallbackConcurrentHashMap.get(event);
-    }
+    }*/
 
     /**
      * Subscribes to events of type {@code type} with the callback
@@ -154,11 +160,6 @@ public abstract class MicroService implements Runnable {
     protected abstract void initialize();
 
     /**
-     * *this method is called when the event loop ends.
-     */
-    protected abstract void close();
-
-    /**
      * Signals the event loop that it must terminate after handling the current
      * message.
      */
@@ -184,22 +185,18 @@ public abstract class MicroService implements Runnable {
         messageBus.register(this);
     	initialize();
 
-       //????
         while(!terminate) {
             try {
+                // retrieve message from appropriate message queue in messagebusimpl
                 Message message = messageBus.awaitMessage(this);
-                // retreive callback function and act to get future object
-                Callback callBack = eventCallbackConcurrentHashMap.get(message);
-                //call
+
+                //retrieve callback and make call to action
                 eventCallbackConcurrentHashMap.get(message.getClass()).call(message);
+
                 // complete
                 //complete(new Future<T>());
-            } catch (InterruptedException e) {
-                close();
-                //??????????????????????;
-            }
+            } catch (InterruptedException e) {/*??????????????????????;*/}
         }
-
         messageBus.unregister(this);
     }
 

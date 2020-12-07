@@ -32,10 +32,6 @@ public class HanSoloMicroservice extends MicroService {
 
     @Override
     protected void initialize() {
-        // subscribe to termination broadcast
-        TerminationBroadcast a = new TerminationBroadcast();
-        TerminationCallback terminationCallback = new TerminationCallback(this);
-        subscribeBroadcast(a.getClass() , terminationCallback);
 
         // subscribe to handle attack events
         AttackEvent attackEvent = new AttackEvent();
@@ -43,11 +39,7 @@ public class HanSoloMicroservice extends MicroService {
         subscribeEvent(attackEvent.getClass(), attackCallback);
 
 
+
     }
 
-    @Override
-    protected  void close(){
-        Diary diary = Diary.getInstance();
-        diary.setHanSoloFinish(currentTimeMillis());
-    }
 }

@@ -23,23 +23,18 @@ public class LandoMicroservice  extends MicroService {
 
     @Override
     protected void initialize() {
-        // subscribe to termination broadcast
-        TerminationBroadcast terminationBroadcast = new TerminationBroadcast();
-        TerminationCallback terminationCallback = new TerminationCallback(this);
-        subscribeBroadcast(terminationBroadcast.getClass() , terminationCallback);
+
 
         // subscribe to handle bomb destroyer events
         BombDestroyerEvent bombDestroyerEvent = new BombDestroyerEvent();
         BombDestroyerCallback bombDestroyerCallback = new BombDestroyerCallback(this, duration);
         subscribeEvent(bombDestroyerEvent.getClass(), bombDestroyerCallback);
+
     }
 
     public long getDuration() {
         return duration;
     }
 
-    @Override
-    protected  void close(){
 
-    }
 }

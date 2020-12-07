@@ -42,8 +42,7 @@ public class MessageBusImpl implements MessageBus {
 	@Override
 	public <T> void subscribeEvent(Class<? extends Event<T>> type, MicroService m) {
 		if(!registrationHashMap.containsKey(type)){
-
-			registrationHashMap.putIfAbsent(type, new ArrayList<MicroService>());
+			registrationHashMap.put(type, new ArrayList<MicroService>());
 		}
 		registrationHashMap.get(type).add(m);
 	}
@@ -51,7 +50,7 @@ public class MessageBusImpl implements MessageBus {
 	@Override
 	public void subscribeBroadcast(Class<? extends Broadcast> type, MicroService m) {
 		if(!registrationHashMap.containsKey(type)){
-			registrationHashMap.putIfAbsent(type, new ArrayList<MicroService>());
+			registrationHashMap.put(type, new ArrayList<MicroService>());
 		}
 		registrationHashMap.get(type).add(m);
     }
@@ -59,20 +58,17 @@ public class MessageBusImpl implements MessageBus {
 	@Override @SuppressWarnings("unchecked")
 	public <T> void complete(Event<T> e, T result) {
 		//?
-
 	}
 
 	@Override
 	public void sendBroadcast(Broadcast b) {
+		// retrieving list of microservices which are subscribed to broadcast b
 		ArrayList<MicroService> a = registrationHashMap.get(b);
+		// adding the broadcast message to the queue of each microservice on the subscribed list
 		for (Object o : a) {
 			int index = registeredMicroservice.indexOf(o);
 			microserviceMessageQueue.get(index).add(b);
 		}
-		/*for(int i = 0; i < a.size(); i++){
-			int index = registeredMicroservice.indexOf(a.get(i));
-			microserviceMessageQueue.get(index).add(b);
-		}*/
 	}
 
 	
@@ -80,19 +76,22 @@ public class MessageBusImpl implements MessageBus {
 	public <T> Future<T> sendEvent(Event<T> e) {
 		// microservice uses method to add the event to a different subscribed microservice
 		// round robin
+
 		// if event not subscribed to return null
 		if(!registrationHashMap.containsKey(e)) {
 			return null;
 		} else {
+			// retrieving list of microservices subscribed to this type of event
 			ArrayList<MicroService> a = registrationHashMap.get(e);
-			//MicroService m = (MicroService) a.get(0);
+			// first microservice in "queue will receive the message
 			MicroService m = a.get(0);
+			int index = registeredMicroservice.indexOf(m);
+			microserviceMessageQueue.get(index).add(e);
 			//round robin implementation - after microservice receives a message it is removed and added
 			// in order to keep a linear order in which subscribed microservices receive event
 			registrationHashMap.get(e).remove(m);
 			registrationHashMap.get(e).add(m);
-			int index = registeredMicroservice.indexOf(m);
-			microserviceMessageQueue.get(index).add(e);
+			//Future<Event> result = new Future();
 			return null; //WHAT TO RETURNNNN
 		}
 	}
@@ -107,11 +106,12 @@ public class MessageBusImpl implements MessageBus {
 
 	@Override
 	public void unregister(MicroService m) {
+		// finding and removing microservice from list of subscribed microservices
 		int i = registeredMicroservice.indexOf(m);
 		registeredMicroservice.remove(i);
+
 		//remove queue
 		microserviceMessageQueue.remove(i);
-		//registrationHashMap.forEac;
 		Set keys = registrationHashMap.keySet();
 		Iterator iter = keys.iterator();
 		while(iter.hasNext()){

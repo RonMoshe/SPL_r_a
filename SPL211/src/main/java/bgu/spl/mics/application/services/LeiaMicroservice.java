@@ -34,10 +34,7 @@ public class LeiaMicroservice extends MicroService {
 
     @Override
     protected void initialize() {
-        // subscribe to termination broadcast
-        TerminationBroadcast terminationBroadcast = new TerminationBroadcast();
-        TerminationCallback terminationCallback = new TerminationCallback(this);
-        subscribeBroadcast(terminationBroadcast.getClass() , terminationCallback);
+
         // send attack events to be handled by message bus
     	for(int i = 0; i < attacks.length; i++){
     	    sendEvent(new AttackEvent(attacks[i]));
@@ -47,13 +44,10 @@ public class LeiaMicroservice extends MicroService {
     	while(attacks.length != diary.getTotalAttacks()){
     	    try {
                 wait();
-            }catch (InterruptedException e){notify();}
+            }catch (InterruptedException e){}
         }
     	sendEvent(new DeactivationEvent());
     }
 
-    @Override
-    protected  void close(){
 
-    }
 }

@@ -20,20 +20,14 @@ public class C3POMicroservice extends MicroService {
 
     @Override
     protected void initialize() {
-        // subscribe to termination broadcast
-        TerminationBroadcast terminationBroadcast = new TerminationBroadcast();
-        TerminationCallback terminationCallback = new TerminationCallback(this);
-        subscribeBroadcast(terminationBroadcast.getClass() , terminationCallback);
 
         // subscribe to handle attack events
         AttackEvent attackEvent = new AttackEvent();
         AttackCallback attackCallback = new AttackCallback(this);
         subscribeEvent(attackEvent.getClass(), attackCallback);
-    }
-
-    @Override
-    protected  void close(){
 
     }
+
+
 
 }

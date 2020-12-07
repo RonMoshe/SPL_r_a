@@ -31,20 +31,12 @@ public class R2D2Microservice extends MicroService {
     @Override
     protected void initialize() {
 
-        // subscribe to termination broadcast
-        TerminationBroadcast terminationBroadcast = new TerminationBroadcast();
-        TerminationCallback terminationCallback = new TerminationCallback(this);
-        subscribeBroadcast(terminationBroadcast.getClass() , terminationCallback);
-
         // subscribe to handle deactivation events
         DeactivationEvent deactivationEvent = new DeactivationEvent();
         DeactivationCallback deactivationCallback = new DeactivationCallback(this, duration);
         subscribeEvent(deactivationEvent.getClass(), deactivationCallback);
+
     }
 
-    @Override
-    protected  void close(){
-        Diary diary = Diary.getInstance();
-        diary.setHanSoloFinish(currentTimeMillis());
-    }
+
 }

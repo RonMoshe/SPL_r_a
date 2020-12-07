@@ -17,20 +17,35 @@ public class AttackCallback implements Callback {
 
     @Override
     public void call(Object c) {
+        // initializing objects necessary for method
         Diary diary = Diary.getInstance();
-        AttackEvent e = (AttackEvent)c;
-        Ewoks ewoks = Ewoks.getInstance(3); // change this!!!
+        AttackEvent e = (AttackEvent) c;
+        Ewoks ewoks = Ewoks.getInstance();
         List<Integer> resourceList = e.getSerials();
+
+        // acquiring necessary ewok objects for attack
         for(int i = 0; i < resourceList.size(); i++){
-            ewoks.acquire(resourceList.get(i));
+            while(!ewoks.acquire(resourceList.get(i))){
+                try {
+                    wait();
+                }catch(InterruptedException x){}
+            }
         }
+
+        // once all required resources are gathered thread will wait for attack duration in order to simulate the attack
         try {
             microService.wait(e.getDuration());
-        }catch (Exception x){}
+        }catch (InterruptedException x){}
         // do you release resources at the end?
+
+        // attack has ended - resources-ewok objects are released
+        for(int i = 0; i < resourceList.size(); i++){
+            ewoks.release(resourceList.get(i));
+        }
 
         // attack is added in diary
         diary.addAttack(microService);
+
         // last attack of microservice is updated in diary
         diary.setAttackerFinish(microService, currentTimeMillis());
     }

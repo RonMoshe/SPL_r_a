@@ -30,18 +30,13 @@ public class Diary {
     private long HanSoloTerminate;
     private long C3POTerminate;
     private long R2D2Terminate;
-    private long LandoTerminate; // use System.currentTimeMillis();
-
-
+    private long LandoTerminate;
 
     private Diary()
     {
-
-        recording = "";
         instance = this.getInstance();
         totalAttacks = 0;
-        //HanSoloFinish = ;
-
+        recording = "";
     }
 
     //synchronized method to control simultaneous access
@@ -57,15 +52,23 @@ public class Diary {
 
     public String getRecording(){return recording;}
 
-    public void setRecording(String recording){this.recording = this.recording + "\n" + recording;}
+    public void setRecording(){
+        long attackEndDifference = (HanSoloFinish-C3POFinish);
+        long attackTerminateDifference = (LandoTerminate - Math.max(HanSoloFinish, C3POFinish));
+        this.recording = "There are " + totalAttacks + " attacks. \n" + "HanSolo and C3PO finish their tasks " + attackEndDifference
+                + " milliseconds one after the other. \n" + "All threads terminate " + attackTerminateDifference + " milliseconds later.";
+    }
 
     public void addAttack(MicroService m){
         // check that microservice can add attack
         // find a better way to do this
-        if(m instanceof HanSoloMicroservice || m instanceof C3POMicroservice)
+        if(m.getName().equals("Han") || m.getName().equals("C3PO"))
             totalAttacks++;
     }
 
+    public int getTotalAttacks() { return totalAttacks; }
+
+    // Attack Callback uses this method to update the end time of the last attack for one of the attacker types(Han/C3PO)
     public void setAttackerFinish(MicroService m, long finishTime){
         if(m.getName().equals("Han"))
             setHanSoloFinish(finishTime);
@@ -73,28 +76,27 @@ public class Diary {
             setC3POFinish(finishTime);
     }
 
+    // set finish time functions for different microservices
     public void setC3POFinish(long c3POFinish) {
         C3POFinish = c3POFinish;
-    }
-
-    public int getTotalAttacks() {
-        return totalAttacks;
     }
 
     public void setHanSoloFinish(long hanSoloFinish) {
         HanSoloFinish = hanSoloFinish;
     }
 
+    // set deactivation time for R2D2
+    public void setR2D2Deactivate(long r2D2Deactivate) {
+        R2D2Deactivate = r2D2Deactivate;
+    }
+
+    // set termination time for different microservices - termination signaled by the same broadcast for all microservices
     public void setC3POTerminate(long c3POTerminate) {
         C3POTerminate = c3POTerminate;
     }
 
     public void setHanSoloTerminate(long hanSoloTerminate) {
         HanSoloTerminate = hanSoloTerminate;
-    }
-
-    public static void setInstance(Diary instance) {
-        Diary.instance = instance;
     }
 
     public void setLandoTerminate(long landoTerminate) {
@@ -105,13 +107,13 @@ public class Diary {
         LeiaTerminate = leiaTerminate;
     }
 
-    public void setR2D2Deactivate(long r2D2Deactivate) {
-        R2D2Deactivate = r2D2Deactivate;
-    }
-
     public void setR2D2Terminate(long r2D2Terminate) {
         R2D2Terminate = r2D2Terminate;
     }
+
+
+
+
 
 
 }

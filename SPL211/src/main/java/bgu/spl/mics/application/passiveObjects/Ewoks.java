@@ -40,18 +40,12 @@ public class Ewoks {
         return instance;
     }
 
-    // decide what would be most efficient way
-    /*private boolean acquire(){
-        for(int i = 0; i < ewokList.size(); i++){
-            synchronized (ewokList.get(i)) {
-                if (ewokList.get(i).getAvailable()) {
-                    ewokList.get(i).acquire();
-                    return true;
-                }
-            }
-        }
-        return false;
-    }*/
+    synchronized public static Ewoks getInstance()
+    {
+        if(instance == null)
+            throw new IllegalArgumentException();
+        return instance;
+    }
 
     public boolean acquire(int serialNumber){
         synchronized (ewokList.get(serialNumber-1)) {
@@ -61,6 +55,10 @@ public class Ewoks {
             }
         }
         return false;
+    }
+
+    public void release(int serialNumber){
+        ewokList.get(serialNumber).release();
     }
 
     public int getAmountEwok(){
