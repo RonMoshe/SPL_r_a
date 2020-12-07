@@ -14,11 +14,18 @@ import java.bgu.spl.mics.application.services.HanSoloMicroservice;
 public class Diary {
 
     private static Diary instance;
+    // recording of program logs
     private String recording;
+
+    // number of total attacks
     private int totalAttacks;
+
+    // finish operation of specific microservices
     private long HanSoloFinish;
     private long C3POFinish;
     private long R2D2Deactivate;
+
+    // termination
     private long LeiaTerminate;
     private long HanSoloTerminate;
     private long C3POTerminate;
@@ -57,6 +64,13 @@ public class Diary {
         // find a better way to do this
         if(m instanceof HanSoloMicroservice || m instanceof C3POMicroservice)
             totalAttacks++;
+    }
+
+    public void setAttackerFinish(MicroService m, long finishTime){
+        if(m.getName().equals("Han"))
+            setHanSoloFinish(finishTime);
+        if(m.getName().equals("C3PO"))
+            setC3POFinish(finishTime);
     }
 
     public void setC3POFinish(long c3POFinish) {

@@ -31,13 +31,15 @@ public abstract class MicroService implements Runnable {
 
     private ConcurrentHashMap<Class<? extends Message>, Callback> eventCallbackConcurrentHashMap;
 
+    private boolean terminate;
+
     /**
      * @param name the micro-service name (used mainly for debugging purposes -
      *             does not have to be unique)
      */
     public MicroService(String name) {
         this.name = name;
-
+        this.terminate = false;
         this.messageBus = MessageBusImpl.getInstance();
         this.eventCallbackConcurrentHashMap = new ConcurrentHashMap<Class<? extends Message>, Callback>();
         initialize();
@@ -152,11 +154,17 @@ public abstract class MicroService implements Runnable {
     protected abstract void initialize();
 
     /**
+     * *this method is called when the event loop ends.
+     */
+    protected abstract void close();
+
+    /**
      * Signals the event loop that it must terminate after handling the current
      * message.
      */
     protected final void terminate() {
-    	this.terminate(); //???
+    	terminate = true;
+        this.terminate(); //???
     }
 
     /**
@@ -177,16 +185,19 @@ public abstract class MicroService implements Runnable {
     	initialize();
 
        //????
-        try {
-            Message message = messageBus.awaitMessage(this);
-            // retreive callback function and act to get future object
-            Callback callBack = eventCallbackConcurrentHashMap.get(message);
-            //call
-            eventCallbackConcurrentHashMap.get(message.getClass()).call(message);
-            // complete
-            //complete(new Future<T>());
-        } catch (InterruptedException e) {
-            //??????????????????????;
+        while(!terminate) {
+            try {
+                Message message = messageBus.awaitMessage(this);
+                // retreive callback function and act to get future object
+                Callback callBack = eventCallbackConcurrentHashMap.get(message);
+                //call
+                eventCallbackConcurrentHashMap.get(message.getClass()).call(message);
+                // complete
+                //complete(new Future<T>());
+            } catch (InterruptedException e) {
+                close();
+                //??????????????????????;
+            }
         }
 
         messageBus.unregister(this);

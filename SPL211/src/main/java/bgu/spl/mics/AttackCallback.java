@@ -5,6 +5,8 @@ import java.bgu.spl.mics.application.passiveObjects.Diary;
 import java.bgu.spl.mics.application.passiveObjects.Ewoks;
 import java.util.List;
 
+import static java.lang.System.currentTimeMillis;
+
 public class AttackCallback implements Callback {
 
     private MicroService microService;
@@ -26,9 +28,10 @@ public class AttackCallback implements Callback {
             microService.wait(e.getDuration());
         }catch (Exception x){}
         // do you release resources at the end?
-        try {
-            microService.wait(((AttackEvent) c).getDuration());
-        }catch(Exception x){}
+
+        // attack is added in diary
         diary.addAttack(microService);
+        // last attack of microservice is updated in diary
+        diary.setAttackerFinish(microService, currentTimeMillis());
     }
 }

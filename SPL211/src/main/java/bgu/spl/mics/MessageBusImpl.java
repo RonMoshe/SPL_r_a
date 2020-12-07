@@ -1,7 +1,10 @@
 package java.bgu.spl.mics;
 
 import java.util.*;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.PriorityBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 /**
  * The {@link MessageBusImpl class is the implementation of the MessageBus interface.
@@ -12,7 +15,8 @@ public class MessageBusImpl implements MessageBus {
 
 	private static MessageBusImpl instance;
 	private ArrayList<MicroService> registeredMicroservice;
-	private ArrayList<PriorityQueue<Message>> microserviceMessageQueue;
+	// use of blocking queue - can you explain this example please(from forum)
+	private ArrayList<PriorityBlockingQueue<Message>> microserviceMessageQueue;
 	private ConcurrentHashMap<Class<? extends Message>, ArrayList<MicroService>> registrationHashMap;
 	private ConcurrentHashMap<Class <? extends Message>, Callback> callBacks;
 
@@ -97,7 +101,8 @@ public class MessageBusImpl implements MessageBus {
 	public void register(MicroService m) {
 		registeredMicroservice.add(m);
 		//add queue
-		microserviceMessageQueue.add(new PriorityQueue<Message>());
+		microserviceMessageQueue.add(new PriorityBlockingQueue<Message>());
+
 	}
 
 	@Override
@@ -128,7 +133,7 @@ public class MessageBusImpl implements MessageBus {
 		int index = registeredMicroservice.indexOf(m);
 		// throw exception???
 		while(microserviceMessageQueue.get(index).isEmpty()){
-			m.wait(1);
+			m.wait();
 		}
 		Message mes = microserviceMessageQueue.get(index).peek();
 		microserviceMessageQueue.get(index).remove(mes);

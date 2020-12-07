@@ -5,6 +5,9 @@ import java.bgu.spl.mics.*;
 import java.bgu.spl.mics.application.messages.AttackEvent;
 import java.bgu.spl.mics.application.messages.TerminationBroadcast;
 import java.bgu.spl.mics.application.passiveObjects.Attack;
+import java.bgu.spl.mics.application.passiveObjects.Diary;
+
+import static java.lang.System.currentTimeMillis;
 
 /**
  * HanSoloMicroservices is in charge of the handling {@link AttackEvent}.
@@ -40,5 +43,11 @@ public class HanSoloMicroservice extends MicroService {
         subscribeEvent(attackEvent.getClass(), attackCallback);
 
 
+    }
+
+    @Override
+    protected  void close(){
+        Diary diary = Diary.getInstance();
+        diary.setHanSoloFinish(currentTimeMillis());
     }
 }

@@ -37,4 +37,9 @@ public class LandoMicroservice  extends MicroService {
     public long getDuration() {
         return duration;
     }
+
+    @Override
+    protected  void close(){
+
+    }
 }

@@ -31,5 +31,9 @@ public class C3POMicroservice extends MicroService {
         subscribeEvent(attackEvent.getClass(), attackCallback);
     }
 
+    @Override
+    protected  void close(){
+
+    }
 
 }
