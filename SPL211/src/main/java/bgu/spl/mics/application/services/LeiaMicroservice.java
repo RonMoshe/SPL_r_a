@@ -4,6 +4,7 @@ import javax.security.auth.callback.Callback;
 import java.bgu.spl.mics.ExampleCallBack;
 import java.bgu.spl.mics.Message;
 import java.bgu.spl.mics.TerminationCallback;
+import java.bgu.spl.mics.application.messages.DeactivationEvent;
 import java.bgu.spl.mics.application.messages.TerminationBroadcast;
 import java.bgu.spl.mics.application.passiveObjects.Diary;
 import java.util.ArrayList;
@@ -41,6 +42,14 @@ public class LeiaMicroservice extends MicroService {
     	for(int i = 0; i < attacks.length; i++){
     	    sendEvent(new AttackEvent(attacks[i]));
         }
+
+    	Diary diary = Diary.getInstance();
+    	while(attacks.length != diary.getTotalAttacks()){
+    	    try {
+                wait();
+            }catch (InterruptedException e){notify();}
+        }
+    	sendEvent(new DeactivationEvent());
     }
 
     @Override

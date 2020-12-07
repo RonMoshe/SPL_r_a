@@ -22,7 +22,7 @@ public class Attack {
     }
 
     public List<Integer> getSerials() {
-        return serials;
+        return this.serials;
     }
 
     public int getDuration() {
