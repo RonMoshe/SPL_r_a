@@ -53,7 +53,7 @@ public class Ewoks {
         return false;
     }*/
 
-    private boolean acquire(int serialNumber){
+    public boolean acquire(int serialNumber){
         synchronized (ewokList.get(serialNumber-1)) {
             if (ewokList.get(serialNumber - 1).getAvailable()) {
                 ewokList.get(serialNumber - 1).acquire();

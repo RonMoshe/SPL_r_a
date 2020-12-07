@@ -27,7 +27,5 @@ public class Input {
     public Attack[] getAttacks() {
         return attacks;
     }
-    public void setAttacks(Attack[] attacks) {
-        this.attacks = attacks;
-    }
+    public void setAttacks(Attack[] attacks) { this.attacks = attacks; }
 }
