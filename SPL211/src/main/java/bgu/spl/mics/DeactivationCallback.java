@@ -21,9 +21,9 @@ public class DeactivationCallback implements Callback {
         // stop thread to imitate deactivation of shield
         try {
             microService.wait(duration);
-        }catch (InterruptedException x){}
+        }catch (InterruptedException e) {}
 
-        // R2D2 has completed the deactivation. updata deactivation time in diary
+        // R2D2 has completed the deactivation. update deactivation time in diary
         Diary diary = Diary.getInstance();
         diary.setR2D2Deactivate(currentTimeMillis());
 

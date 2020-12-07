@@ -6,7 +6,7 @@ import java.bgu.spl.mics.application.passiveObjects.Diary;
 public class BombDestroyerCallback implements Callback {
 
     private MicroService microService;
-    private long duration;
+    private final long duration;
 
     public BombDestroyerCallback(MicroService m, long duration){
         this.microService = m;

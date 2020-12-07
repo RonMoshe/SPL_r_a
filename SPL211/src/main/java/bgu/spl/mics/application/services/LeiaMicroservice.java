@@ -1,6 +1,5 @@
 package java.bgu.spl.mics.application.services;
 
-
 import java.bgu.spl.mics.application.messages.DeactivationEvent;
 import java.bgu.spl.mics.application.passiveObjects.Diary;
 import java.bgu.spl.mics.MicroService;
@@ -16,7 +15,7 @@ import java.bgu.spl.mics.application.messages.AttackEvent;
  * You MAY change constructor signatures and even add new public constructors.
  */
 public class LeiaMicroservice extends MicroService {
-	private Attack[] attacks;
+	private final Attack[] attacks;
 	
     public LeiaMicroservice(Attack[] attacks) {
         super("Leia");

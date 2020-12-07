@@ -16,8 +16,7 @@ public class Ewoks {
     // accessed by only by getInstance() method
     private static Ewoks instance;
     private int amountEwok;
-
-    private ArrayList<Ewok> ewokList;
+    private final ArrayList<Ewok> ewokList;
 
     private Ewoks(int amount) // how to initialize ewok array properly
     {

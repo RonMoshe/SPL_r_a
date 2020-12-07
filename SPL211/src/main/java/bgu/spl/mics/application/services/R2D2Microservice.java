@@ -14,7 +14,7 @@ import  java.bgu.spl.mics.application.messages.DeactivationEvent;
  */
 public class R2D2Microservice extends MicroService {
 
-    private long duration;
+    private final long duration;
 
     public R2D2Microservice(long duration) {
         super("R2D2");

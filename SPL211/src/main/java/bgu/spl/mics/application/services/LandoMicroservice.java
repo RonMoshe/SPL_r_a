@@ -12,7 +12,7 @@ import java.bgu.spl.mics.application.messages.BombDestroyerEvent;
  */
 public class LandoMicroservice  extends MicroService {
 
-    private long duration;
+    private final long duration;
 
     public LandoMicroservice(long duration) {
         super("Lando");
