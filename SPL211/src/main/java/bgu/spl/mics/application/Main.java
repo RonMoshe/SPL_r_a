@@ -1,6 +1,5 @@
 package java.bgu.spl.mics.application;
 
-import java.bgu.spl.mics.application.messages.AttackEvent;
 import java.bgu.spl.mics.application.passiveObjects.Attack;
 import java.bgu.spl.mics.application.passiveObjects.Diary;
 import java.bgu.spl.mics.application.passiveObjects.Ewoks;
@@ -33,8 +32,9 @@ public class Main {
 			HanSoloMicroservice HanMS = new HanSoloMicroservice();
 			Diary diary = Diary.getInstance();
 			Attack[] attacks = json.getAttacks();
-			LeiaMicroservice LeiaMS = new LeiaMicroservice(attacks);
 			System.out.println("read");
+			LeiaMicroservice LeiaMS = new LeiaMicroservice(attacks);
+
 			//Input json = Input.
 
 		} catch (IOException e) {

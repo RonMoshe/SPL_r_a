@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.bgu.spl.mics.application.passiveObjects.Ewok;
-import java.bgu.spl.mics.application.passiveObjects.Ewoks;
 
 import static org.junit.jupiter.api.Assertions.*;
 

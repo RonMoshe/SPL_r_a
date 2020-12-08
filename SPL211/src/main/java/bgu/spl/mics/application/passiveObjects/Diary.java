@@ -32,7 +32,7 @@ public class Diary {
 
     private Diary()
     {
-        instance = this.getInstance();
+        //instance = this.getInstance();
         totalAttacks = 0;
         recording = "";
     }

@@ -4,9 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.bgu.spl.mics.Future;
 import java.util.concurrent.TimeUnit;
-import  java.util.function.BooleanSupplier;
 
 import static org.junit.jupiter.api.Assertions.*;
 

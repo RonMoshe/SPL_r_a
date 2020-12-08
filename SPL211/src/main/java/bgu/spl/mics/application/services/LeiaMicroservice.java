@@ -1,10 +1,10 @@
 package java.bgu.spl.mics.application.services;
 
-import java.bgu.spl.mics.application.messages.DeactivationEvent;
-import java.bgu.spl.mics.application.passiveObjects.Diary;
 import java.bgu.spl.mics.MicroService;
-import java.bgu.spl.mics.application.passiveObjects.Attack;
 import java.bgu.spl.mics.application.messages.AttackEvent;
+import java.bgu.spl.mics.application.messages.DeactivationEvent;
+import java.bgu.spl.mics.application.passiveObjects.Attack;
+import java.bgu.spl.mics.application.passiveObjects.Diary;
 
 /**
  * LeiaMicroservices Initialized with Attack objects, and sends them as  {@link AttackEvent}.

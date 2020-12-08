@@ -2,7 +2,7 @@ package java.bgu.spl.mics.application.services;
 
 import java.bgu.spl.mics.DeactivationCallback;
 import java.bgu.spl.mics.MicroService;
-import  java.bgu.spl.mics.application.messages.DeactivationEvent;
+import java.bgu.spl.mics.application.messages.DeactivationEvent;
 
 /**
  * R2D2Microservices is in charge of the handling {@link DeactivationEvent}.

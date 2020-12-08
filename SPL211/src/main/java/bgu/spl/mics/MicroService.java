@@ -2,6 +2,7 @@ package java.bgu.spl.mics;
 
 
 import java.bgu.spl.mics.application.messages.TerminationBroadcast;
+
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -11,11 +12,11 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p>
  * Derived classes of MicroService should never directly touch the message-bus.
  * Instead, they have a set of internal protected wrapping methods (e.g.,
- * {@link #sendBroadcast(java.bgu.spl.mics.Broadcast)}, {@link #sendBroadcast(java.bgu.spl.mics.Broadcast)},
+ * {@link #sendBroadcast(Broadcast)}, {@link #sendBroadcast(Broadcast)},
  * etc.) they can use. When subscribing to message-types,
  * the derived class also supplies a {@link Callback} that should be called when
  * a message of the subscribed type was taken from the micro-service
- * message-queue (see {@link MessageBus#register(java.bgu.spl.mics.MicroService)}
+ * message-queue (see {@link MessageBus#register(MicroService)}
  * method). The abstract MicroService stores this callback together with the
  * type of the message is related to.
  * 
@@ -26,7 +27,7 @@ public abstract class MicroService implements Runnable {
 
     private String name;
 
-    private java.bgu.spl.mics.MessageBusImpl messageBus;
+    private MessageBusImpl messageBus;
 
     private ConcurrentHashMap<Class<? extends Message>, Callback> eventCallbackConcurrentHashMap;
 

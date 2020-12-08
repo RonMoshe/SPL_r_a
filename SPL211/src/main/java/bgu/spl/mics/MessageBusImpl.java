@@ -19,7 +19,7 @@ public class MessageBusImpl implements MessageBus {
 
 	private MessageBusImpl()
 	{
-		instance = getInstance();
+		//instance = getInstance();
 		registeredMicroservice = new ArrayList<>();
 		microserviceMessageQueue = new ArrayList<>();
 		registrationHashMap = new ConcurrentHashMap<>();
